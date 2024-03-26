@@ -2,4 +2,9 @@
 <resources>
 
     <style name="Theme.UserProfileSample" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
 </resources>
