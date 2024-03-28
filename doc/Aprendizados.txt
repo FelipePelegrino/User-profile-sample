@@ -1,0 +1,24 @@
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+✓
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-> Início do projeto
+	• Relembrando como trocar o icon do app launcher
+	• Como deixar a statusBar transparente com compose
+		- Cuidado ao fazer o arquivo Theme.kt, que via ferramenta do material já trazia a statusBar com uma cor. Perdi um tempo pq não tinha visto esse código que estava sobrescrevendo o que eu estava fazendo.
+	• SplashScreenAPI
+		- Mesmo que eu não vá personalizar uma splash, é interessante utilizar essa API, principalmente para carregamento de informações ao iniciar o app, com o uso do método setKeepOnScreenCondition()
+		- Muito importante criar um themes.xml (night), para ter as cores do night theme setados para a SplashScreen
+			♦ Só criar um arquivo themes.xml em values -> themes com night de propriedade
+	• Tipografia
+		- Precisamos usar um arquivo .ttf ou .otf (aparentemente o mais comum/recomendável é .ttf)
+		- Esse arquivo ficara em res -> font
+		- Lemos com FontFamily(Font(R.font.ibm_plex_mono))
+	• Utilização do libs.versions.toml
+	• Diferença entre 
+		class NiaAppState(
+			val navController: NavHostController,
+			coroutineScope: CoroutineScope
+		)
+		- pelo keyword val, navController se torna uma propriedade de classe read-only acessado por fora de quem a chama
+		- coroutineScope, é apenas um valor de parametro passado durante a instanciação que não pode ser acessado por fora
