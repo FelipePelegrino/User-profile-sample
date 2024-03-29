@@ -22,3 +22,18 @@
 		)
 		- pelo keyword val, navController se torna uma propriedade de classe read-only acessado por fora de quem a chama
 		- coroutineScope, é apenas um valor de parametro passado durante a instanciação que não pode ser acessado por fora
+		
+	• AppState
+		- contém as principais informações que são compartilhadas entre todo o app, como configuração de navegação do app
+		- se o dispositivo está offline ou não
+		- timezone
+	• ComposableApp
+		- tudo que o AppState mantem, é executado aqui
+		- coisas como Scafold, navRail, bottombar, navDrawer
+		- exibir a mensagem informando que o app ficou offline
+		- passar o timezone para demais telas ( ou podemos utilizar CompostionLocalProvider para isso, evitando passar para toda a UI tree como parametro)
+		- No final executa um composable com Surface, chama o AppNavHost
+	• AppNavHost
+		- Vai configurar o NavHost, recebendo o navController via AppState
+		- Vai configurar o Graph de forma sequencial na instancia do NavHost
+		- Configura o startDestination
