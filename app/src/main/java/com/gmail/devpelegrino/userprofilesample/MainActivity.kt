@@ -6,10 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -18,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.gmail.devpelegrino.userprofilesample.ui.UserProfileApp
+import com.gmail.devpelegrino.userprofilesample.ui.rememberUserProfileAppState
 import com.gmail.devpelegrino.userprofilesample.ui.theme.UserProfileSampleTheme
 import kotlin.random.Random
 import kotlin.random.nextInt
@@ -48,18 +47,10 @@ class MainActivity : ComponentActivity() {
                 onDispose {}
             }
 
+            val userProfileAppState = rememberUserProfileAppState()
+
             UserProfileSampleTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting(
-                        name = LoremIpsum(
-                            Random.nextInt(1..100)
-                        ).values.joinToString(),
-                        Modifier.padding(top = 48.dp)
-                    )
-                }
+                UserProfileApp(appState = userProfileAppState)
             }
         }
     }
@@ -77,7 +68,12 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     UserProfileSampleTheme {
-
+        Greeting(
+            name = LoremIpsum(
+                Random.nextInt(1..100)
+            ).values.joinToString(),
+            Modifier.padding(top = 48.dp)
+        )
     }
 }
 
