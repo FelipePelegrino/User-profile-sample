@@ -13,8 +13,8 @@ val typography = Typography(
     headlineSmall = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontFamily = FontFamily(Font(R.font.ibm_plex_mono)),
-        fontSize = 24.sp,
-        lineHeight = 32.sp,
+        fontSize = 18.sp,
+        lineHeight = 26.sp,
         letterSpacing = 0.sp
     ),
     titleLarge = TextStyle(

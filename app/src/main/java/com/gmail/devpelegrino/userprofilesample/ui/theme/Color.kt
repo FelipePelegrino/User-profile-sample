@@ -65,3 +65,4 @@ val md_theme_dark_scrim = Color(0xFF000000)
 
 
 val pumpingSpice = Color(0xFFF65042)
+val bunker = Color(0xFF202934)

@@ -2,8 +2,9 @@
     <string name="app_name">User Profile Sample</string>
 
     <!-- Description -->
-    <string name="go_back_description">go back</string>
+    <string name="description_go_back">go back</string>
 
     <!-- Components -->
     <string name="button_edit">Edit</string>
+    <string name="text_profile_image">Profile image</string>
 </resources>
