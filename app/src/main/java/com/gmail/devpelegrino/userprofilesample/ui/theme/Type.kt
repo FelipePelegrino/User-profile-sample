@@ -34,7 +34,7 @@ val typography = Typography(
     bodyMedium = TextStyle(
         fontWeight = FontWeight.Medium,
         fontFamily = FontFamily(Font(R.font.ibm_plex_mono)),
-        fontSize = 14.sp,
+        fontSize = 20.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.25.sp
     ),
