@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +19,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +33,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gmail.devpelegrino.userprofilesample.R
 import com.gmail.devpelegrino.userprofilesample.common.PreviewScreen
+import com.gmail.devpelegrino.userprofilesample.ui.profile.UserProfileBasicTextField
+import com.gmail.devpelegrino.userprofilesample.ui.profile.nameKeyboardOptions
 import com.gmail.devpelegrino.userprofilesample.ui.theme.UserProfileSampleTheme
 import com.gmail.devpelegrino.userprofilesample.ui.theme.bunker
 import com.gmail.devpelegrino.userprofilesample.ui.theme.pumpingSpice
@@ -38,6 +45,7 @@ fun EditScreen(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+    var name by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -56,14 +64,17 @@ fun EditScreen(
                 modifier = Modifier.size(28.dp)
             )
         }
+
         Text(
             text = stringResource(R.string.button_edit),
             color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(top = 24.dp, start = 36.dp)
         )
+
         Row(
             verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                .fillMaxWidth()
                 .padding(start = 36.dp, top = 20.dp)
                 .clickable {
                     //TODO: buscar imagem na galeria/camera
@@ -93,6 +104,21 @@ fun EditScreen(
                 modifier = Modifier.padding(16.dp)
             )
         }
+
+        UserProfileBasicTextField(
+            textFieldName = "Name",
+            text = name,
+            onTextChange = {
+                name = it
+            },
+            placeHolder = {
+                if (name.isBlank()) {
+                    Text(text = "First Last", color = Color.Gray)
+                }
+            },
+            keyboardOptions = nameKeyboardOptions,
+            modifier = Modifier.padding(start = 36.dp, top = 36.dp, end = 36.dp)
+        )
     }
 }
 
