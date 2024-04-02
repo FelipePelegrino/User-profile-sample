@@ -18,10 +18,10 @@ val typography = Typography(
         letterSpacing = 0.sp
     ),
     titleLarge = TextStyle(
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Bold,
         fontFamily = FontFamily(Font(R.font.ibm_plex_mono)),
-        fontSize = 24.sp,
-        lineHeight = 32.sp,
+        fontSize = 38.sp,
+        lineHeight = 46.sp,
         letterSpacing = 0.0.sp
     ),
     bodyLarge = TextStyle(

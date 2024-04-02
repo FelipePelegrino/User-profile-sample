@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.gmail.devpelegrino.userprofilesample.ui.UserProfileAppState
-import com.gmail.devpelegrino.userprofilesample.ui.profile.EditScreen
+import com.gmail.devpelegrino.userprofilesample.ui.edit.EditScreen
 import com.gmail.devpelegrino.userprofilesample.ui.profile.ProfileScreen
 
 const val PROFILE_ROUTE = "profile_route"
@@ -29,7 +29,7 @@ fun UserProfileNavHost(
             ProfileScreen(onEditClick = navController::navigateToEdit)
         }
         composable(route = EDIT_PROFILE_ROUTE) {
-            EditScreen()
+            EditScreen(onBackClick = { navController.popBackStack() })
         }
     }
 }

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">User Profile Sample</string>
+
+    <!-- Description -->
+    <string name="go_back_description">go back</string>
+
+    <!-- Components -->
+    <string name="button_edit">Edit</string>
 </resources>
