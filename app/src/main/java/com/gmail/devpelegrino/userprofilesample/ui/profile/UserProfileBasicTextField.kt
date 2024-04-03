@@ -29,7 +29,7 @@ fun UserProfileBasicTextField(
     keyboardOptions: KeyboardOptions,
     onTextChange: (text: String) -> Unit,
     modifier: Modifier = Modifier,
-    placeHolder: @Composable (() -> Unit)? = null
+    placeholder: @Composable (() -> Unit)? = null
 ) {
     Column(modifier = modifier) {
         Text(
@@ -41,8 +41,8 @@ fun UserProfileBasicTextField(
             value = text,
             onValueChange = onTextChange,
             placeholder = {
-                if (placeHolder != null) {
-                    placeHolder()
+                if (placeholder != null) {
+                    placeholder()
                 }
             },
             keyboardOptions = keyboardOptions,
@@ -72,7 +72,7 @@ private fun UserProfileBasicTextFieldPreview() {
             onTextChange = {
                 text = it
             },
-            placeHolder = {
+            placeholder = {
                 Text(text = "Test")
             },
             keyboardOptions = defaultKeyboardOptions

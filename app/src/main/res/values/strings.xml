@@ -6,5 +6,18 @@
 
     <!-- Components -->
     <string name="button_edit">Edit</string>
+    <string name="button_save">Save</string>
     <string name="text_profile_image">Profile image</string>
+    <string name="field_name">name</string>
+    <string name="field_email">email</string>
+    <string name="field_role">role</string>
+    <string name="field_phone">phone</string>
+    <string name="field_birthday">date of birth</string>
+    <string name="field_experience">experience</string>
+    <string name="placeholder_name">First Last</string>
+    <string name="placeholder_email">name@email.com</string>
+    <string name="placeholder_role">Designer</string>
+    <string name="placeholder_phone">000 000 000</string>
+    <string name="placeholder_birthday">dd-mm-yy</string>
+    <string name="placeholder_experience">0</string>
 </resources>
