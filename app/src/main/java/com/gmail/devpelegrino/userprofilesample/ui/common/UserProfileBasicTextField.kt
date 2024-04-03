@@ -1,4 +1,4 @@
-package com.gmail.devpelegrino.userprofilesample.ui.profile
+package com.gmail.devpelegrino.userprofilesample.ui.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,8 +15,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gmail.devpelegrino.userprofilesample.ui.theme.UserProfileSampleTheme
@@ -29,7 +31,8 @@ fun UserProfileBasicTextField(
     keyboardOptions: KeyboardOptions,
     onTextChange: (text: String) -> Unit,
     modifier: Modifier = Modifier,
-    placeholder: @Composable (() -> Unit)? = null
+    placeholder: @Composable (() -> Unit)? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     Column(modifier = modifier) {
         Text(
@@ -46,6 +49,7 @@ fun UserProfileBasicTextField(
                 }
             },
             keyboardOptions = keyboardOptions,
+            visualTransformation = visualTransformation,
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = bunker,
                 unfocusedContainerColor = bunker,
@@ -80,12 +84,37 @@ private fun UserProfileBasicTextFieldPreview() {
     }
 }
 
-val nameKeyboardOptions = KeyboardOptions(
-    keyboardType = KeyboardType.Text,
-    capitalization = KeyboardCapitalization.Words
-)
-
 val defaultKeyboardOptions = KeyboardOptions(
     keyboardType = KeyboardType.Text,
-    capitalization = KeyboardCapitalization.Sentences
+    capitalization = KeyboardCapitalization.Sentences,
+    imeAction = ImeAction.Next
 )
+
+val nameKeyboardOptions = KeyboardOptions(
+    keyboardType = KeyboardType.Text,
+    capitalization = KeyboardCapitalization.Words,
+    imeAction = ImeAction.Next
+)
+
+val emailKeyboardOptions = KeyboardOptions(
+    keyboardType = KeyboardType.Email,
+    capitalization = KeyboardCapitalization.None,
+    imeAction = ImeAction.Next
+)
+
+val phoneKeyboardOptions = KeyboardOptions(
+    keyboardType = KeyboardType.Number,
+    capitalization = KeyboardCapitalization.None,
+    imeAction = ImeAction.Next
+)
+
+val numberKeyboardOptions = KeyboardOptions(
+    keyboardType = KeyboardType.Number,
+    capitalization = KeyboardCapitalization.None,
+    imeAction = ImeAction.Done
+)
+
+fun isValidEmail(email: String): Boolean {
+    val emailRegex = Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})")
+    return emailRegex.matches(email)
+}

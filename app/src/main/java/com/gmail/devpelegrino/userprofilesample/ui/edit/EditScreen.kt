@@ -35,9 +35,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gmail.devpelegrino.userprofilesample.R
 import com.gmail.devpelegrino.userprofilesample.common.PreviewScreen
-import com.gmail.devpelegrino.userprofilesample.ui.profile.UserProfileBasicTextField
-import com.gmail.devpelegrino.userprofilesample.ui.profile.defaultKeyboardOptions
-import com.gmail.devpelegrino.userprofilesample.ui.profile.nameKeyboardOptions
+import com.gmail.devpelegrino.userprofilesample.ui.common.PhoneVisualTransformation
+import com.gmail.devpelegrino.userprofilesample.ui.common.UserProfileBasicTextField
+import com.gmail.devpelegrino.userprofilesample.ui.common.defaultKeyboardOptions
+import com.gmail.devpelegrino.userprofilesample.ui.common.emailKeyboardOptions
+import com.gmail.devpelegrino.userprofilesample.ui.common.nameKeyboardOptions
+import com.gmail.devpelegrino.userprofilesample.ui.common.numberKeyboardOptions
+import com.gmail.devpelegrino.userprofilesample.ui.common.phoneKeyboardOptions
 import com.gmail.devpelegrino.userprofilesample.ui.theme.UserProfileSampleTheme
 import com.gmail.devpelegrino.userprofilesample.ui.theme.bunker
 import com.gmail.devpelegrino.userprofilesample.ui.theme.pumpingSpice
@@ -141,7 +145,7 @@ fun EditScreen(
                     Text(text = stringResource(R.string.placeholder_email), color = Color.Gray)
                 }
             },
-            keyboardOptions = defaultKeyboardOptions,
+            keyboardOptions = emailKeyboardOptions,
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
 
@@ -164,14 +168,17 @@ fun EditScreen(
             textFieldName = stringResource(R.string.field_phone),
             text = phone,
             onTextChange = {
-                phone = it
+                if (it.length < 12) {
+                    phone = it
+                }
             },
             placeholder = {
                 if (phone.isBlank()) {
                     Text(text = stringResource(R.string.placeholder_phone), color = Color.Gray)
                 }
             },
-            keyboardOptions = defaultKeyboardOptions,
+            keyboardOptions = phoneKeyboardOptions,
+            visualTransformation = PhoneVisualTransformation(),
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
 
@@ -194,14 +201,16 @@ fun EditScreen(
             textFieldName = stringResource(R.string.field_experience),
             text = experience,
             onTextChange = {
-                experience = it
+                if (it.length < 4) {
+                    experience = it
+                }
             },
             placeholder = {
                 if (experience.isBlank()) {
                     Text(text = stringResource(R.string.placeholder_experience), color = Color.Gray)
                 }
             },
-            keyboardOptions = defaultKeyboardOptions,
+            keyboardOptions = numberKeyboardOptions,
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
     }
