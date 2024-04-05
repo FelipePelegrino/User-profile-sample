@@ -18,6 +18,6 @@
     <string name="placeholder_email">name@email.com</string>
     <string name="placeholder_role">Designer</string>
     <string name="placeholder_phone">(00) 00000-0000</string>
-    <string name="placeholder_birthday">dd-mm-yy</string>
+    <string name="placeholder_birthday">dd/mm/yyyy</string>
     <string name="placeholder_experience">0</string>
 </resources>

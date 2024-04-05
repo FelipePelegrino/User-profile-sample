@@ -3,6 +3,7 @@ package com.gmail.devpelegrino.userprofilesample.ui.profile
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -26,7 +27,12 @@ fun ProfileScreen(
             .background(color = md_theme_dark_primaryContainer),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = { onEditClick() }) {
+        Button(
+            onClick = { onEditClick() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 36.dp)
+        ) {
             Text(text = "Edit")
         }
         Text(

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -16,6 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,8 +36,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.gmail.devpelegrino.userprofilesample.R
 import com.gmail.devpelegrino.userprofilesample.common.PreviewScreen
+import com.gmail.devpelegrino.userprofilesample.ui.common.DateVisualTransformation
 import com.gmail.devpelegrino.userprofilesample.ui.common.PhoneVisualTransformation
 import com.gmail.devpelegrino.userprofilesample.ui.common.UserProfileBasicTextField
 import com.gmail.devpelegrino.userprofilesample.ui.common.defaultKeyboardOptions
@@ -193,7 +198,8 @@ fun EditScreen(
                     Text(text = stringResource(R.string.placeholder_birthday), color = Color.Gray)
                 }
             },
-            keyboardOptions = defaultKeyboardOptions,
+            keyboardOptions = numberKeyboardOptions,
+            visualTransformation = DateVisualTransformation(),
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
 
@@ -213,6 +219,21 @@ fun EditScreen(
             keyboardOptions = numberKeyboardOptions,
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
+
+        Button(
+            onClick = {},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = pumpingSpice,
+                contentColor = Color.White
+            ),
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier
+                .heightIn(min = 120.dp)
+                .fillMaxWidth()
+                .padding(bottom = 24.dp, top = 36.dp, start = 36.dp, end = 36.dp)
+        ) {
+            Text(text = stringResource(id = R.string.button_save), fontSize = 20.sp)
+        }
     }
 }
 
