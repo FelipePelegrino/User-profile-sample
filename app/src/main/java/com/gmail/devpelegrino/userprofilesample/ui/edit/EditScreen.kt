@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gmail.devpelegrino.userprofilesample.R
@@ -68,7 +69,6 @@ fun EditScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(bottom = 16.dp)
             .verticalScroll(rememberScrollState())
     ) {
         IconButton(
@@ -191,14 +191,18 @@ fun EditScreen(
             textFieldName = stringResource(R.string.field_birthday),
             text = birthday,
             onTextChange = {
-                birthday = it
+                if (it.length < 9) {
+                    birthday = it
+                }
             },
             placeholder = {
                 if (birthday.isBlank()) {
                     Text(text = stringResource(R.string.placeholder_birthday), color = Color.Gray)
                 }
             },
-            keyboardOptions = numberKeyboardOptions,
+            keyboardOptions = numberKeyboardOptions.copy(
+                imeAction = ImeAction.Next
+            ),
             visualTransformation = DateVisualTransformation(),
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
@@ -207,7 +211,7 @@ fun EditScreen(
             textFieldName = stringResource(R.string.field_experience),
             text = experience,
             onTextChange = {
-                if (it.length < 4) {
+                if (it.length < 3) {
                     experience = it
                 }
             },
@@ -216,7 +220,9 @@ fun EditScreen(
                     Text(text = stringResource(R.string.placeholder_experience), color = Color.Gray)
                 }
             },
-            keyboardOptions = numberKeyboardOptions,
+            keyboardOptions = numberKeyboardOptions.copy(
+                imeAction = ImeAction.Done
+            ),
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
 

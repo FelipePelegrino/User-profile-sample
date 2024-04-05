@@ -110,8 +110,7 @@ val phoneKeyboardOptions = KeyboardOptions(
 
 val numberKeyboardOptions = KeyboardOptions(
     keyboardType = KeyboardType.Number,
-    capitalization = KeyboardCapitalization.None,
-    imeAction = ImeAction.Done
+    capitalization = KeyboardCapitalization.None
 )
 
 fun isValidEmail(email: String): Boolean {
