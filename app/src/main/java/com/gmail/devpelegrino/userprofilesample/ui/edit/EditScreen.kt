@@ -57,6 +57,7 @@ fun EditScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    //TODO: create editScreenViewModel
     val context = LocalContext.current
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -227,7 +228,13 @@ fun EditScreen(
         )
 
         Button(
-            onClick = {},
+            onClick = {
+                /*
+                * TODO: add saving animation
+                *  success animation
+                *  error animation
+                * */
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = pumpingSpice,
                 contentColor = Color.White
