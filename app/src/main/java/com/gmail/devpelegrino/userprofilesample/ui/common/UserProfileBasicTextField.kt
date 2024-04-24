@@ -3,6 +3,7 @@ package com.gmail.devpelegrino.userprofilesample.ui.common
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -29,8 +30,9 @@ fun UserProfileBasicTextField(
     textFieldName: String,
     text: String,
     keyboardOptions: KeyboardOptions,
-    onTextChange: (text: String) -> Unit,
     modifier: Modifier = Modifier,
+    onImeAction: () -> Unit = {},
+    onTextChange: (text: String) -> Unit,
     placeholder: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
@@ -49,6 +51,11 @@ fun UserProfileBasicTextField(
                 }
             },
             keyboardOptions = keyboardOptions,
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    onImeAction()
+                }
+            ),
             visualTransformation = visualTransformation,
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = bunker,
