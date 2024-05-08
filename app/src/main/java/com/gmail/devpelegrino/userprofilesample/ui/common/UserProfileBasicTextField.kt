@@ -31,6 +31,8 @@ fun UserProfileBasicTextField(
     text: String,
     keyboardOptions: KeyboardOptions,
     modifier: Modifier = Modifier,
+    isError: Boolean = false,
+    errorText: String = "Error occurred at $textFieldName",
     onImeAction: () -> Unit = {},
     onTextChange: (text: String) -> Unit,
     placeholder: @Composable (() -> Unit)? = null,
@@ -39,11 +41,12 @@ fun UserProfileBasicTextField(
     Column(modifier = modifier) {
         Text(
             text = textFieldName.uppercase(),
-            color = Color.Gray,
+            color = if (isError) Color.Red else Color.Gray,
             style = MaterialTheme.typography.labelMedium
         )
         OutlinedTextField(
             value = text,
+            isError = isError,
             onValueChange = onTextChange,
             placeholder = {
                 if (placeholder != null) {
@@ -61,7 +64,10 @@ fun UserProfileBasicTextField(
                 focusedContainerColor = bunker,
                 unfocusedContainerColor = bunker,
                 focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
+                unfocusedIndicatorColor = Color.Transparent,
+                errorCursorColor = Color.Red,
+                errorIndicatorColor = Color.Red,
+                errorContainerColor = bunker
             ),
             textStyle = MaterialTheme.typography.bodyMedium,
             shape = MaterialTheme.shapes.medium,
@@ -69,6 +75,16 @@ fun UserProfileBasicTextField(
                 .fillMaxWidth()
                 .padding(top = 8.dp)
         )
+        if (isError) {
+            Text(
+                text = errorText,
+                color = Color.Red,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp, start = 4.dp)
+            )
+        }
     }
 }
 
@@ -120,6 +136,7 @@ val numberKeyboardOptions = KeyboardOptions(
     capitalization = KeyboardCapitalization.None
 )
 
+//TODO:
 fun isValidEmail(email: String): Boolean {
     val emailRegex = Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})")
     return emailRegex.matches(email)
