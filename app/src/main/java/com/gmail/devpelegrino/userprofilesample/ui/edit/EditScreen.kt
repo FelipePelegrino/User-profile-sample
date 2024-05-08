@@ -40,9 +40,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gmail.devpelegrino.userprofilesample.R
 import com.gmail.devpelegrino.userprofilesample.common.PreviewScreen
+import com.gmail.devpelegrino.userprofilesample.ui.common.BasicTextFieldState
 import com.gmail.devpelegrino.userprofilesample.ui.common.DateVisualTransformation
 import com.gmail.devpelegrino.userprofilesample.ui.common.PhoneVisualTransformation
 import com.gmail.devpelegrino.userprofilesample.ui.common.UserProfileBasicTextField
+import com.gmail.devpelegrino.userprofilesample.ui.common.UserProfileBasicTextFieldWithState
 import com.gmail.devpelegrino.userprofilesample.ui.common.defaultKeyboardOptions
 import com.gmail.devpelegrino.userprofilesample.ui.common.emailKeyboardOptions
 import com.gmail.devpelegrino.userprofilesample.ui.common.nameKeyboardOptions
@@ -228,6 +230,34 @@ fun EditScreen(
 //                viewModel.save()
             },
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
+        )
+
+        //TODO: aplicar esse padrão aos demais
+        val experienceState by remember {
+            mutableStateOf(BasicTextFieldState(
+                initialValue = "",
+                maxLength = 3,
+                validator = { s: String ->
+                    return@BasicTextFieldState s.isNotEmpty()
+                }
+            ))
+        }
+        UserProfileBasicTextFieldWithState(
+            textFieldName = stringResource(R.string.field_experience),
+            state = experienceState,
+            placeholder = {
+                if (experience.isBlank()) {
+                    Text(text = stringResource(R.string.placeholder_experience), color = Color.Gray)
+                }
+            },
+            keyboardOptions = numberKeyboardOptions.copy(
+                imeAction = ImeAction.Done
+            ),
+            onImeAction = {
+//                viewModel.save()
+            },
+            modifier = Modifier
+                .padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
 
         Button(

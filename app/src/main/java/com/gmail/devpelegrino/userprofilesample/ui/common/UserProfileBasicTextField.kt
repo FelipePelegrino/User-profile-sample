@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -76,6 +77,73 @@ fun UserProfileBasicTextField(
                 .padding(top = 8.dp)
         )
         if (isError) {
+            Text(
+                text = errorText,
+                color = Color.Red,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp, start = 4.dp)
+            )
+        }
+    }
+}
+
+//TODO: implementar esse composable e renomear para UserProfileBasicTextField
+@Composable
+fun UserProfileBasicTextFieldWithState(
+    textFieldName: String,
+    state: BasicTextFieldState,
+    keyboardOptions: KeyboardOptions,
+    modifier: Modifier = Modifier,
+    errorText: String = "Error occurred at $textFieldName",
+    onImeAction: () -> Unit = {},
+    placeholder: @Composable (() -> Unit)? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None
+) {
+    Column(modifier = modifier.onFocusChanged { focusState ->
+        state.onFocusChange(focusState.isFocused)
+        if (!focusState.isFocused) {
+            state.enableShowErrors()
+        }
+    }) {
+        Text(
+            text = textFieldName.uppercase(),
+            color = if (state.showErrors()) Color.Red else Color.Gray,
+            style = MaterialTheme.typography.labelMedium
+        )
+        OutlinedTextField(
+            value = state.text,
+            isError = state.showErrors(),
+            onValueChange = state.onTextChanged,
+            placeholder = {
+                if (placeholder != null) {
+                    placeholder()
+                }
+            },
+            keyboardOptions = keyboardOptions,
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    onImeAction()
+                }
+            ),
+            visualTransformation = visualTransformation,
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = bunker,
+                unfocusedContainerColor = bunker,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                errorCursorColor = Color.Red,
+                errorIndicatorColor = Color.Red,
+                errorContainerColor = bunker
+            ),
+            textStyle = MaterialTheme.typography.bodyMedium,
+            shape = MaterialTheme.shapes.medium,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+        )
+        if (state.showErrors()) {
             Text(
                 text = errorText,
                 color = Color.Red,
