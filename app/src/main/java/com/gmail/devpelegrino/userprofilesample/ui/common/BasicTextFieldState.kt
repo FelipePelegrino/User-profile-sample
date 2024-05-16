@@ -2,7 +2,6 @@ package com.gmail.devpelegrino.userprofilesample.ui.common
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.setValue
 
 // Baseado no jetSurveyApp
@@ -37,13 +36,3 @@ class BasicTextFieldState(
 
     fun showErrors() = !isValid && displayErrors
 }
-
-fun textFieldStateSaver(state: BasicTextFieldState) = listSaver<BasicTextFieldState, Any>(
-    save = { listOf(it.text, it.isFocusedAtLeastOneTime) },
-    restore = {
-        state.apply {
-            text = it[0] as String
-            isFocusedAtLeastOneTime = it[1] as Boolean
-        }
-    }
-)
