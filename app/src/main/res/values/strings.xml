@@ -16,8 +16,14 @@
     <string name="field_experience">experience</string>
     <string name="placeholder_name">First Last</string>
     <string name="placeholder_email">name@email.com</string>
-    <string name="placeholder_role">Designer</string>
+    <string name="placeholder_role">Developer</string>
     <string name="placeholder_phone">(00) 00000-0000</string>
     <string name="placeholder_birthday">dd/mm/yyyy</string>
     <string name="placeholder_experience">0</string>
+    <string name="error_generic_message">Error occurred at %s</string>
+    <string name="error_name_message">Enter at least 3 character</string>
+    <string name="error_email_message">Enter a valid email</string>
+    <string name="error_phone_message">Enter a valid phone</string>
+    <string name="error_birthday_message">Enter a valid date</string>
+    <string name="error_experience_message">Enter at least 1 number</string>
 </resources>

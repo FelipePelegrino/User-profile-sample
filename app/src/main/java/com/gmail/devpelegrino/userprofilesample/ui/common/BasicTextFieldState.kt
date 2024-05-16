@@ -11,18 +11,6 @@ class BasicTextFieldState(
     private val maxLength: Int,
     private val validator: (String) -> Boolean = { true }
 ) {
-    /*
-    * TODO:
-    * Validar tamanho max do texto
-    *   permitir até tamanho X do texto, depende do campo
-    * pattern para número de telefone
-    *   se tiver errado, exibir erro
-    * pattern para email
-    *   se tiver errado, exibir erro
-    * exibir erro
-    *   muda cor, exibe mensagem de texto
-    * */
-
     var text: String by mutableStateOf(initialValue)
     internal var isFocusedAtLeastOneTime: Boolean by mutableStateOf(false)
     var isFocused: Boolean by mutableStateOf(false)

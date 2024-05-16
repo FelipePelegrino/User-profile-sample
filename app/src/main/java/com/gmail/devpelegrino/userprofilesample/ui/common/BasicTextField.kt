@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -27,71 +26,7 @@ import com.gmail.devpelegrino.userprofilesample.ui.theme.UserProfileSampleTheme
 import com.gmail.devpelegrino.userprofilesample.ui.theme.bunker
 
 @Composable
-fun UserProfileBasicTextField(
-    textFieldName: String,
-    text: String,
-    keyboardOptions: KeyboardOptions,
-    modifier: Modifier = Modifier,
-    isError: Boolean = false,
-    errorText: String = "Error occurred at $textFieldName",
-    onImeAction: () -> Unit = {},
-    onTextChange: (text: String) -> Unit,
-    placeholder: @Composable (() -> Unit)? = null,
-    visualTransformation: VisualTransformation = VisualTransformation.None
-) {
-    Column(modifier = modifier) {
-        Text(
-            text = textFieldName.uppercase(),
-            color = if (isError) Color.Red else Color.Gray,
-            style = MaterialTheme.typography.labelMedium
-        )
-        OutlinedTextField(
-            value = text,
-            isError = isError,
-            onValueChange = onTextChange,
-            placeholder = {
-                if (placeholder != null) {
-                    placeholder()
-                }
-            },
-            keyboardOptions = keyboardOptions,
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    onImeAction()
-                }
-            ),
-            visualTransformation = visualTransformation,
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = bunker,
-                unfocusedContainerColor = bunker,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                errorCursorColor = Color.Red,
-                errorIndicatorColor = Color.Red,
-                errorContainerColor = bunker
-            ),
-            textStyle = MaterialTheme.typography.bodyMedium,
-            shape = MaterialTheme.shapes.medium,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
-        )
-        if (isError) {
-            Text(
-                text = errorText,
-                color = Color.Red,
-                style = MaterialTheme.typography.labelMedium,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp, start = 4.dp)
-            )
-        }
-    }
-}
-
-//TODO: implementar esse composable e renomear para UserProfileBasicTextField
-@Composable
-fun UserProfileBasicTextFieldWithState(
+fun BasicTextField(
     textFieldName: String,
     state: BasicTextFieldState,
     keyboardOptions: KeyboardOptions,
@@ -158,15 +93,20 @@ fun UserProfileBasicTextFieldWithState(
 
 @Preview
 @Composable
-private fun UserProfileBasicTextFieldPreview() {
-    var text by remember { mutableStateOf("") }
+private fun BasicTextFieldPreview() {
+    val testState by remember {
+        mutableStateOf(BasicTextFieldState(
+            initialValue = "",
+            maxLength = 10,
+            validator = { s: String ->
+                s.isNotEmpty() && s.length > 2
+            }
+        ))
+    }
     UserProfileSampleTheme {
-        UserProfileBasicTextField(
+        BasicTextField(
             textFieldName = "Test",
-            text = text,
-            onTextChange = {
-                text = it
-            },
+            state = testState,
             placeholder = {
                 Text(text = "Test")
             },
@@ -204,8 +144,12 @@ val numberKeyboardOptions = KeyboardOptions(
     capitalization = KeyboardCapitalization.None
 )
 
-//TODO:
 fun isValidEmail(email: String): Boolean {
     val emailRegex = Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})")
     return emailRegex.matches(email)
+}
+
+fun isValidBirthday(birthday: String): Boolean {
+    val birthdayRegex = Regex("""^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[0-2])\d{4}$""")
+    return birthdayRegex.matches(birthday)
 }

@@ -27,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,13 +39,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gmail.devpelegrino.userprofilesample.R
 import com.gmail.devpelegrino.userprofilesample.common.PreviewScreen
+import com.gmail.devpelegrino.userprofilesample.ui.common.BasicTextField
 import com.gmail.devpelegrino.userprofilesample.ui.common.BasicTextFieldState
 import com.gmail.devpelegrino.userprofilesample.ui.common.DateVisualTransformation
+import com.gmail.devpelegrino.userprofilesample.ui.common.MAX_LENGTH_BIRTHDAY
+import com.gmail.devpelegrino.userprofilesample.ui.common.MAX_LENGTH_DEFAULT
+import com.gmail.devpelegrino.userprofilesample.ui.common.MAX_LENGTH_EXPERIENCE
+import com.gmail.devpelegrino.userprofilesample.ui.common.MAX_LENGTH_PHONE
+import com.gmail.devpelegrino.userprofilesample.ui.common.MIN_LENGTH_NAME
+import com.gmail.devpelegrino.userprofilesample.ui.common.MIN_LENGTH_PHONE
 import com.gmail.devpelegrino.userprofilesample.ui.common.PhoneVisualTransformation
-import com.gmail.devpelegrino.userprofilesample.ui.common.UserProfileBasicTextField
-import com.gmail.devpelegrino.userprofilesample.ui.common.UserProfileBasicTextFieldWithState
 import com.gmail.devpelegrino.userprofilesample.ui.common.defaultKeyboardOptions
 import com.gmail.devpelegrino.userprofilesample.ui.common.emailKeyboardOptions
+import com.gmail.devpelegrino.userprofilesample.ui.common.isValidBirthday
+import com.gmail.devpelegrino.userprofilesample.ui.common.isValidEmail
 import com.gmail.devpelegrino.userprofilesample.ui.common.nameKeyboardOptions
 import com.gmail.devpelegrino.userprofilesample.ui.common.numberKeyboardOptions
 import com.gmail.devpelegrino.userprofilesample.ui.common.phoneKeyboardOptions
@@ -61,12 +67,60 @@ fun EditScreen(
 ) {
     //TODO: create editScreenViewModel
     val context = LocalContext.current
-    var name by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var role by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
-    var birthday by remember { mutableStateOf("") }
-    var experience by remember { mutableStateOf("") }
+    val nameState by remember {
+        mutableStateOf(BasicTextFieldState(
+            initialValue = "",
+            maxLength = MAX_LENGTH_DEFAULT,
+            validator = { s: String ->
+                s.isNotEmpty() && s.length > MIN_LENGTH_NAME
+            }
+        ))
+    }
+    val emailState by remember {
+        mutableStateOf(BasicTextFieldState(
+            initialValue = "",
+            maxLength = MAX_LENGTH_DEFAULT,
+            validator = { s: String ->
+                s.isNotEmpty() && isValidEmail(s)
+            }
+        ))
+    }
+    val roleState by remember {
+        mutableStateOf(BasicTextFieldState(
+            initialValue = "",
+            maxLength = MAX_LENGTH_DEFAULT,
+            validator = { _: String ->
+                true
+            }
+        ))
+    }
+    val phoneState by remember {
+        mutableStateOf(BasicTextFieldState(
+            initialValue = "",
+            maxLength = MAX_LENGTH_PHONE,
+            validator = { s: String ->
+                s.length > MIN_LENGTH_PHONE
+            }
+        ))
+    }
+    val birthdayState by remember {
+        mutableStateOf(BasicTextFieldState(
+            initialValue = "",
+            maxLength = MAX_LENGTH_BIRTHDAY,
+            validator = { s: String ->
+                s.isNotEmpty() && isValidBirthday(s)
+            }
+        ))
+    }
+    val experienceState by remember {
+        mutableStateOf(BasicTextFieldState(
+            initialValue = "",
+            maxLength = MAX_LENGTH_EXPERIENCE,
+            validator = { s: String ->
+                s.isNotEmpty()
+            }
+        ))
+    }
 
     Column(
         modifier = modifier
@@ -127,44 +181,37 @@ fun EditScreen(
             )
         }
 
-        UserProfileBasicTextField(
+        BasicTextField(
             textFieldName = stringResource(R.string.field_name),
-            text = name,
-            onTextChange = {
-                name = it
-            },
+            state = nameState,
             placeholder = {
-                if (name.isBlank()) {
+                if (nameState.text.isBlank()) {
                     Text(text = stringResource(R.string.placeholder_name), color = Color.Gray)
                 }
             },
+            errorText = stringResource(R.string.error_name_message),
             keyboardOptions = nameKeyboardOptions,
-            modifier = Modifier.padding(start = 36.dp, top = 36.dp, end = 36.dp)
+            modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
 
-        UserProfileBasicTextField(
+        BasicTextField(
             textFieldName = stringResource(R.string.field_email),
-            text = email,
-            onTextChange = {
-                email = it
-            },
+            state = emailState,
             placeholder = {
-                if (email.isBlank()) {
+                if (emailState.text.isBlank()) {
                     Text(text = stringResource(R.string.placeholder_email), color = Color.Gray)
                 }
             },
+            errorText = stringResource(R.string.error_email_message),
             keyboardOptions = emailKeyboardOptions,
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
 
-        UserProfileBasicTextField(
+        BasicTextField(
             textFieldName = stringResource(R.string.field_role),
-            text = role,
-            onTextChange = {
-                role = it
-            },
+            state = roleState,
             placeholder = {
-                if (role.isBlank()) {
+                if (roleState.text.isBlank()) {
                     Text(text = stringResource(R.string.placeholder_role), color = Color.Gray)
                 }
             },
@@ -172,37 +219,29 @@ fun EditScreen(
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
 
-        UserProfileBasicTextField(
+        BasicTextField(
             textFieldName = stringResource(R.string.field_phone),
-            text = phone,
-            onTextChange = {
-                if (it.length < 12) {
-                    phone = it
-                }
-            },
+            state = phoneState,
             placeholder = {
-                if (phone.isBlank()) {
+                if (phoneState.text.isBlank()) {
                     Text(text = stringResource(R.string.placeholder_phone), color = Color.Gray)
                 }
             },
+            errorText = stringResource(id = R.string.error_phone_message),
             keyboardOptions = phoneKeyboardOptions,
             visualTransformation = PhoneVisualTransformation(),
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
 
-        UserProfileBasicTextField(
+        BasicTextField(
             textFieldName = stringResource(R.string.field_birthday),
-            text = birthday,
-            onTextChange = {
-                if (it.length < 9) {
-                    birthday = it
-                }
-            },
+            state = birthdayState,
             placeholder = {
-                if (birthday.isBlank()) {
+                if (birthdayState.text.isBlank()) {
                     Text(text = stringResource(R.string.placeholder_birthday), color = Color.Gray)
                 }
             },
+            errorText = stringResource(id = R.string.error_birthday_message),
             keyboardOptions = numberKeyboardOptions.copy(
                 imeAction = ImeAction.Next
             ),
@@ -210,54 +249,23 @@ fun EditScreen(
             modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
 
-        UserProfileBasicTextField(
-            textFieldName = stringResource(R.string.field_experience),
-            text = experience,
-            onTextChange = {
-                if (it.length < 3) {
-                    experience = it
-                }
-            },
-            placeholder = {
-                if (experience.isBlank()) {
-                    Text(text = stringResource(R.string.placeholder_experience), color = Color.Gray)
-                }
-            },
-            keyboardOptions = numberKeyboardOptions.copy(
-                imeAction = ImeAction.Done
-            ),
-            onImeAction = {
-//                viewModel.save()
-            },
-            modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
-        )
-
-        //TODO: aplicar esse padrão aos demais
-        val experienceState by remember {
-            mutableStateOf(BasicTextFieldState(
-                initialValue = "",
-                maxLength = 3,
-                validator = { s: String ->
-                    return@BasicTextFieldState s.isNotEmpty()
-                }
-            ))
-        }
-        UserProfileBasicTextFieldWithState(
+        BasicTextField(
             textFieldName = stringResource(R.string.field_experience),
             state = experienceState,
             placeholder = {
-                if (experience.isBlank()) {
+                if (experienceState.text.isBlank()) {
                     Text(text = stringResource(R.string.placeholder_experience), color = Color.Gray)
                 }
             },
+            errorText = stringResource(id = R.string.error_experience_message),
             keyboardOptions = numberKeyboardOptions.copy(
                 imeAction = ImeAction.Done
             ),
             onImeAction = {
+                          //TODO:
 //                viewModel.save()
             },
-            modifier = Modifier
-                .padding(start = 36.dp, top = 24.dp, end = 36.dp)
+            modifier = Modifier.padding(start = 36.dp, top = 24.dp, end = 36.dp)
         )
 
         Button(
